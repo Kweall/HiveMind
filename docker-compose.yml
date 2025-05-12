@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - STORAGE=postgres
+      - DATABASE_URL=postgres://user:password@db:5432/hivemind?sslmode=disable
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hivemind
+    ports:
+      - "5432:5432"
